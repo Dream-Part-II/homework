@@ -37,6 +37,7 @@ def main():
         import gym
         env = gym.make(args.envname)
         max_steps = args.max_timesteps or env.spec.timestep_limit
+        print(max_steps)
 
         returns = []
         observations = []
@@ -66,7 +67,10 @@ def main():
         print('std of return', np.std(returns))
 
         expert_data = {'observations': np.array(observations),
-                       'actions': np.array(actions)}
+                       'actions': np.array(actions),
+                       'returns': returns}
+
+        pickle.dump(expert_data, open(args.envname + "-data.pkl", "wb"))
 
 if __name__ == '__main__':
     main()
